@@ -1,0 +1,35 @@
+Sistemas Concurrentes y Distribuidos. Curso 23-24.
+Ejercicios adicionales de la práctica 1.
+
+Ejercicio P1.1. (Productor-consumidor FIFO con impresora, con semáforos)
+Copia tu solución FIFO al problema de un productor y un consumidor con vector
+intermedio (de la práctica 1) en un archivo llamado exactamente p1_pc_impr.cpp,
+y extiéndelo para cumplir estos requisitos adicionales a los del problema
+original (usando semáforos)
+
+(1) Se creará una nueva variable compartida que contendrá el número de celdas
+ocupadas en el buffer en cada momento (es decir, elementos producidos y añadidos
+al vector pero todavía no consumidos). Esta variable se debe actualizar por el
+productor y por el consumidor, teniendo en cuenta que dicha actualización forma
+parte del proceso de inserción o extracción de valores del buffer, de forma que
+el valor de la variable siempre se corresponda con el estado de dicho buffer (es
+decir, ninguna hebra en ningún momento leerá en esa variable un valor distinto del
+real según las inserciones y extracciones completadas hasta ese momento).
+
+(2) Se debe crear una nueva hebra llamada impresora, que ejecuta un bucle finito.
+En cada iteración debe bloquearse hasta que sea desbloqueada por otra hebra, y
+después, tras ser desbloqueada, debe imprimir por pantalla el número de celdas
+ocupadas que hay en el vector en ese momento
+
+(3) Cuando el productor produzca un número múltiplo de 5, inmediatamente después
+de insertar dicho número al vector, debe desbloquear a la hebra impresora y luego
+debe bloquearse hasta ser desbloqueado por la hebra impresora. Hay que tener en
+cuenta que la hebra impresora debe imprimir el contador de casillas ocupadas
+resultante de esta última inserción del productor (no un valor posterior distinto,
+resultado de otras operaciones posteriores distintas a esta última).
+
+(4) La hebra impresora, una vez que haya escrito el mensaje por pantalla,
+desbloqueará al productor y volverá al principio de su ciclo. El número de
+iteraciones de la hebra impresora es igual al número de múltiplos de 5 que hay entre
+0 y N-1 (ambos incluidos), es decir, será N/5 (división entera), donde N es el número
+total de valores producidos.
